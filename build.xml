@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<project basedir="." default="compile" name="prosperoCore"
+    xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <ivy:settings file="ivysettings.xml" />
+
+    <!-- ================================= properties ================================= -->
+    <property environment="env" />
+    <property name="javac.debuglevel" value="source,lines,vars" />
+    <property name="javac.target" value="1.6" />
+    <property name="javac.source" value="1.6" />
+
+    <property name="lib.dir" value="lib" />
+    <property name="build.dir" value="build" />
+    <property name="src.dir" value="src" />
+    <property name="resource.dir" value="resources" />
+    <property name="build.dir.classes" value="${build.dir}/classes" />
+	<property name="build.dir.jar" value="${build.dir}/jar" />
+	<property name="build.dir.source" value="${build.dir}/source" />
+	<property name="build.dir.pom" value="${build.dir}/pom" />
+
+    <property name="props.file" value="framework-defaults.properties" />
+
+    <property name="version" value="1.0" />
+
+    <path id="lib.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <!-- ================================= target: resolve ================================= -->
+    <target name="resolve" description="--> retreive dependencies with ivy">
+        <ivy:retrieve sync="true" log="quiet" />
+    </target>
+
+    <!-- ================================= target: clean ================================= -->
+    <target name="clean" depends="resolve">
+        <echo>Cleaning Directories</echo>
+        <delete dir="${build.dir}" />
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${build.dir.classes}" />
+        <!-- <antcall target="clean-logs"/> -->
+    </target>
+
+    <!-- ================================= target: compile ================================= -->
+    <target name="compile" depends="clean">
+        <javac srcdir="${src.dir}" destdir="${build.dir.classes}"
+            source="${javac.source}" target="${javac.target}" debug="on"
+            includeantruntime="no">
+            <classpath refid="lib.classpath" />
+        </javac>
+    </target>
+
+    <!-- ================================= target: revision number ================================= -->
+    <target name="rev-number">
+        <exec dir="${basedir}" executable="svnversion"
+            outputproperty="svn.revision" />
+        <ivy:info />
+        <ivy:buildnumber organisation="${ivy.organisation}"
+            module="${ivy.module}" revision="${version}"
+            defaultBuildNumber="1" revSep="." />
+        <property name="version.revision" value="${version}.${svn.revision}" />
+        <echo message="Revision Number: ${version.revision}" />
+    </target>
+
+    <!-- ================================= target: package ================================= -->
+    <target name="package" depends="compile,rev-number">
+        <property name="jar.file" value="${ant.project.name}.jar" />
+        <jar destfile="${build.dir.jar}/${jar.file}" index="true" indexMetaInf="true" >
+            <fileset dir="${build.dir.classes}" includes="**/*" />
+            <fileset dir="${resource.dir}" includes="**/*" />
+            <manifest>
+                <attribute name="Build-Version" value="${version.revision}" />
+            </manifest>
+        </jar>
+    	<jar destfile="${build.dir.source}/${jar.file}">
+    	 	<fileset dir="${src.dir}" includes="**/*.java" />
+    	</jar>
+    </target>
+	
+    <!-- ================================= target: publish ================================= -->
+    <target name="publish" depends="package"
+        description="Publish this project in the ivy repository">
+    	<ivy:deliver deliverpattern="${build.dir}/ivy.xml" pubrevision="${version.revision}" status="release" />
+    	<ivy:makepom ivyfile="${build.dir}/ivy.xml" pomfile="${build.dir.pom}/${ant.project.name}.pom"/>
+        <ivy:publish artifactspattern="${build.dir}/[type]/[artifact].[ext]"
+            resolver="nexus-releases" pubrevision="${version.revision}" status="release"
+           	 overwrite="false" publishivy="false" />
+        <echo message="project ${ant.project.name} released with version ${version.revision}" />
+    </target>
+
+	<!-- ================================= target: publish-snapshot ================================= -->
+    <target name="publish-snapshot" depends="package"
+        description="Publish this project in the ivy repository">
+    	<ivy:deliver deliverpattern="${build.dir}/ivy.xml"  status="release" pubrevision="${version.revision}-SNAPSHOT"/>
+    	<ivy:makepom ivyfile="${build.dir}/ivy.xml" pomfile="${build.dir.pom}/${ant.project.name}.pom"/>
+        <ivy:publish artifactspattern="${build.dir}/[type]/[artifact].[ext]"
+            resolver="nexus-snapshots"  status="integration" pubrevision="${version.revision}-SNAPSHOT"
+            overwrite="true" publishivy="false" />
+        <echo
+            message="project ${ant.project.name} snapshot released with version ${version.revision}-SNAPSHOT" />
+    </target>
+	
+</project>
