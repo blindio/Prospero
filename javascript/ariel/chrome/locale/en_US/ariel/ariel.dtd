@@ -1,0 +1,7 @@
+<!ENTITY app.title	"prospero ariel">
+<!ENTITY app.id		"ariel">	
+
+<!ENTITY menuHelp.label "Help">
+<!ENTITY menuHelp.accesskey "H">
+<!ENTITY menuitemAbout.label "About ariel">
+<!ENTITY menuitemAbout.accesskey "A">

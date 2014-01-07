@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="ariel.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://ariel/locale/ariel.dtd">
+
+
+<window id="ariel" title="&app.title;" width="1200" height="900"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    orient="vertical" onload="onLoad();">
+
+
+    <script src="jquery-1.7.2.js" />
+    <script src="utilities.js" />
+    <script src="ariel-compositeclasses.js" />
+    <script src="ariel-props.js" />
+    <script src="ariel-storage.js" />
+    <script src="ariel-elementbox.js" />
+    <script src="ariel-browser.js" />
+    <script src="ariel-editor.js" />
+    <script src="ariel-locator.js" />
+    <script src="ariel-baseelement.js" />
+    <script src="ariel-elements.js" />
+    <script src="ariel-elementaggregate.js" />
+    <script src="ariel.js" />
+    <script type="application/javascript" src="chrome://global/content/globalOverlay.js" />
+
+    <commandset id="editMenuCommands">
+        <command id="cmd_undo" oncommand="goDoCommand('cmd_undo')" />
+
+        <command id="cmd_cut" oncommand="goDoCommand('cmd_cut')" />
+        <command id="cmd_copy" oncommand="goDoCommand('cmd_copy')" />
+        <command id="cmd_paste" oncommand="goDoCommand('cmd_paste')" />
+        <command id="cmd_delete" oncommand="goDoCommand('cmd_delete')" />
+        <command id="cmd_selectAll" oncommand="goDoCommand('cmd_selectAll')" />
+    </commandset>
+
+    <popupset>
+        <menupopup id="elementBoxItemContextMenu">
+            <menuitem label="Delete Element"
+                oncommand="elementbox.onItemContextMenu(event)" />
+        </menupopup>
+        <menupopup id="elementBoxNewItemContextMenu">
+            <menuitem label="new ElementGroup"
+                oncommand="elementbox.onNewElementGroupContextMenu(event)" />
+            <menuitem label="new ElementGroupSequence"
+                oncommand="elementbox.onNewElementGroupSequenceContextMenu(event)" />
+        </menupopup>
+        <menupopup id="browserContextMenu">
+            <menuitem label="Add Element" oncommand="browser.onContextMenu(event)" />
+        </menupopup>
+        <menupopup id="autoUpdateNameContextMenu">
+            <menuitem label="Undo" accesskey="u" command="cmd_undo" />
+            <menuitem label="Cut" accesskey="t" command="cmd_cut" />
+            <menuitem label="Copy" accesskey="c" command="cmd_copy" />
+            <menuitem label="Paste" accesskey="p" command="cmd_paste" />
+            <menuitem label="Delete" accesskey="d" command="cmd_delete" />
+            <menuseparator />
+            <menuitem label="Select All" accesskey="a"
+                command="cmd_selectAll" />
+            <menuseparator />
+            <menuitem label="AutoUpdate"
+                oncommand="BaseElement.eventHandlers.updateAutoName(event)" />
+        </menupopup>
+        <menupopup id="autoUpdateLocatorConstStrContextMenu">
+            <menuitem label="Undo" accesskey="u" command="cmd_undo" />
+            <menuitem label="Cut" accesskey="t" command="cmd_cut" />
+            <menuitem label="Copy" accesskey="c" command="cmd_copy" />
+            <menuitem label="Paste" accesskey="p" command="cmd_paste" />
+            <menuitem label="Delete" accesskey="d" command="cmd_delete" />
+            <menuseparator />
+            <menuitem label="Select All" accesskey="a"
+                command="cmd_selectAll" />
+            <menuseparator />
+            <menuitem label="AutoUpdate"
+                oncommand="BaseElement.eventHandlers.autoUpdateLocatorConstStr(event)" />
+        </menupopup>
+    </popupset>
+
+
+
+    <toolbox flex="0">
+      <menubar id="menubar" align="right" flex="1">
+        <menu id="help-menu" label="Help">
+          <menupopup id="help-popup">
+            <menuitem label="Database" oncommand="startSQLiteBrowser()"/>
+            <menuitem label="About" oncommand="window.openDialog('chrome://ariel/content/about.xul')"/>
+          </menupopup>
+        </menu>
+      </menubar>
+    </toolbox>
+
+    <hbox flex="1">
+    <vbox id="left-side" flex="1" pack="center" minwidth="250" >
+        <grid id="props">
+            <columns>
+                <column flex="1" />
+                <column flex="4" />
+            </columns>
+            <rows id="props-rows">
+                <row id="props-composite-classtype-row">
+                    <label value="Class Type" />
+                    <menulist id="composite-class" oncommand="props.buildPropsBox()">
+                        <menupopup>
+                            <menuitem label="PageObject" value="PAGEOBJECT"
+                                selected="true" />
+                            <menuitem label="ElementGroup"
+                                value="ELEMENTGROUP" />
+                        </menupopup>
+                    </menulist>
+                </row>
+            </rows>
+        </grid>
+        <vbox id="elements-outerbox" flex="1">
+            <richlistbox id="elements-box" flex="1"
+                context="elementBoxNewItemContextMenu" />
+        </vbox>
+
+    </vbox>
+
+    <splitter />
+
+    <vbox id="right-side" flex="3">
+
+        <vbox flex="2" id="browser-box">
+            <hbox>
+                <vbox pack="center">
+                    <label value="URL:" />
+                </vbox>
+                <textbox id="browser-url" type="autocomplete"
+                    autocompletesearch="history" flex="1"
+                    autocomplete="browser.onUrlChange()" />
+                
+                <vbox pack="center">
+                    <label value="Size:" tooltiptext="W x H (in pixels)" />
+                </vbox>
+                <textbox id="browser-dims" type="autocomplete"
+                    autocompletesearch="basic-autocomplete" width="75" />
+                <vbox pack="center">
+                    <label value="User Agent:" />
+                </vbox>
+                <menulist id="browser-useragent-type">
+                    <menupopup>
+                        <menuitem label="Desktop" value="desktop" />
+                        <menuitem label="Mobile" value="mobile" />
+                    </menupopup>
+                </menulist>
+                <button label="Load" oncommand="browser.onLoadButton()" />
+
+            </hbox>
+            <hbox flex="1" pack="center" style="overflow:auto">
+                <vbox flex="1" pack="center" style="overflow:auto">
+                    <hbox id="browser-box-height" flex="1" height="0"
+                        pack="center">
+                        <vbox id="browser-box-width" pack="center"
+                            width="0" flex="1">
+                            <browser id="browser-frame" flex="1"
+                                type="content-primary" context="browserContextMenu" />
+                        </vbox>
+                    </hbox>
+                </vbox>
+            </hbox>
+        </vbox>
+        <splitter />
+        <vbox id="java-box" flex="1" minheight="200">
+            <hbox pack="center" aligh="" >
+                <button label="Build Java" oncommand="editor.buildJava()" />
+                <button label="Export Java" oncommand="editor.exportJava()" />
+                <button label="Import Java" oncommand="editor.importJava()" />
+                <button label="Rebuild From Java" oncommand="editor.rebuildFromJava()" />
+                <button label="Clear All" oncommand="editor.clearAll()" />
+            </hbox>
+            <hbox flex="1">
+                <editor id="java-editor" type="content" flex="1"
+                    editortype="text" />
+            </hbox>
+        </vbox>
+
+    </vbox>
+    </hbox>
+</window>

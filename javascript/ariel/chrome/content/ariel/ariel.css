@@ -1,0 +1,98 @@
+.m0 { outline:solid red 1px; }
+
+.tooltip {
+    display:none;
+    position:absolute;
+    border:1px solid #333;
+    background-color:#161616;
+    border-radius:5px;
+    padding:10px;
+    color:#fff;
+    font-size:12px Arial;
+    top: 0;
+    left: 0;
+}
+
+.elementtint {
+    position: relative;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    -moz-shadow: rgba(0,0,0,.2) 3px 5px 5px;
+    box-shadow: rgba(0,0,0,.2) 3px 5px 5px;
+}
+
+
+.elementtint:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    -moz-transition: all .3s linear;
+    transition: all .3s linear;
+}
+
+.elementboxtint {
+    -moz-appearance: none;
+}
+
+
+.greentint {   
+    background: rgba(0,255,0, 0.5);
+}
+
+.lightgreentint {
+	background: rgba(127,255,0, 0.5);
+}
+
+.yellowtint {   
+    background: rgba(255,255,0, 0.5);
+}
+
+.redtint {   
+    background: rgba(255,0,0, 0.5);
+}
+
+
+.greentint:before {   
+    background: rgba(0,255,0, 0.5);
+}
+
+.lightgreentint:before {
+    background: rgba(127,255,0, 0.5);
+}
+
+.yellowtint:before {   
+    background: rgba(255,255,0, 0.5);
+}
+
+.redtint:before {   
+    background: rgba(255,0,0, 0.5);
+}
+
+treechildren::-moz-tree-row(elementTintGreen)
+{
+  background: rgba(0,255,0, 0.5);
+}
+
+treechildren::-moz-tree-row(elementTintYellow)
+{
+  background: rgba(255,255,0, 0.5);
+}
+
+treechildren::-moz-tree-row(elementTintRed)
+{
+  background: rgba(255,0,0, 0.5);
+}
+
+.badtint {
+    overflow: hidden;
+    float: left;
+    background: green;
+    margin: 0 20px 20px 0;
+    opacity: .5;  
+} 

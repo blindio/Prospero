@@ -1,0 +1,10 @@
+pref("toolkit.defaultChromeURI", "chrome://ariel/content/ariel.xul");
+pref("general.useragent.locale", "en_US");    		
+pref("general.useragent.extra.ariel", "ariel/0.1");
+user_pref("capability.principal.codebase.mat.granted","UniversalXPConnect");
+/* debugging prefs */
+pref("browser.dom.window.dump.enabled", true);
+pref("javascript.options.showInConsole", true);
+pref("javascript.options.strict", true);
+pref("nglayout.debug.disable_xul_cache", true);
+pref("nglayout.debug.disable_xul_fastload", true);

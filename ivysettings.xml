@@ -1,19 +1,5 @@
 <ivysettings>
     <settings defaultResolver="default" />
-    
- 	<!--  <credentials host="sfe-builder"
-                      realm="Sonatype Nexus Repository Manager"
-                      username="deployment" passwd="sfxess"/> 
-    <property name="nexus-snapshots" value="http://sfe-builder/nexus/content/repositories/snapshots"/>                  	
-	<property name="nexus-releases" value="http://sfe-builder/nexus/content/repositories/releases"/>
-    <resolvers>
-        <ibiblio name="shared" m2compatible="true"
-			root="http://sfe-builder/nexus/content/groups/public"/>		
-		<ibiblio name="nexus-releases" m2compatible="true" root="${nexus-releases}"/>
-		<ibiblio name="nexus-snapshots" m2compatible="true" root="${nexus-snapshots}" checkmodified="true" 
-			changingPattern="*-SNAPSHOT"/>
-    </resolvers>
-	-->
     <include url="${ivy.default.settings.dir}/ivysettings-public.xml" />
     <include url="${ivy.default.settings.dir}/ivysettings-shared.xml" />
     <include url="${ivy.default.settings.dir}/ivysettings-local.xml" />

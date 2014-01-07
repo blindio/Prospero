@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="ariel.css" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://ariel/locale/ariel.dtd">
+ 
+<dialog id="ariel-about" title="About"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" buttons="accept"
+  buttonlabelaccept="OK" buttonaccesskeyaccept="O"
+  ondialogaccept="window.close();" >
+
+
+
+  <vbox flex="1">
+    <grid>
+      <columns>
+        <column style="padding: 2px 15px;"/>
+        <column style="padding: 6px;" flex="1"/>
+      </columns>
+      <rows>
+        <row align="center">
+          <image id="about-icon"/>
+          <vbox>
+            <label id="about-homepage" />
+          </vbox>
+        </row>
+      </rows>
+    </grid>
+    <grid>
+      <columns>
+        <column style="padding: 2px 15px;"/>
+        <column style="padding: 3px 6px 3px 5px;" flex="1"/>
+      </columns>
+        <rows>
+        <row align="center">
+          <text value="Author :"/>
+          <text id="about-creator" value="Thorson Little"/>
+        </row>
+        <row align="center">
+          <text value="License:"/>
+          <text id="about-license" value="TBD"/>
+        </row>
+      </rows>
+    </grid>
+  </vbox>
+</dialog>
