@@ -39,7 +39,7 @@
         </row>
         <row align="center">
           <text value="License:"/>
-          <text id="about-license" value="TBD"/>
+          <text id="about-license" value="Apache License Version 2.0, January 2004"/>
         </row>
       </rows>
     </grid>
