@@ -1,3 +1,6 @@
+/.project
+/.classpath
+/bin/org/prospero/core/elements/ProsperoData.class
 /bin/org/prospero/core/browserdrivers/BrowserDriver.class
 /bin/org/prospero/core/browserdrivers/BrowserDriverFactory.class
 /bin/org/prospero/core/browserdrivers/RemoteControlDriver.class
