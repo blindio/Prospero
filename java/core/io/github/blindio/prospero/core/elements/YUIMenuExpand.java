@@ -1,0 +1,47 @@
+/*******************************************************************************
+ * Copyright 2014 S. Thorson Little
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+package io.github.blindio.prospero.core.elements;
+
+import io.github.blindio.prospero.core.utils.Context;
+
+/**
+ * Element representing expansion of a top level Menu in the YUI subnav
+ * 
+ * @author tlittle
+ */
+public class YUIMenuExpand extends BaseElement {
+
+    public YUIMenuExpand(String locator) {
+	super(locator);
+    }
+
+    /**
+     * Hover over the element
+     */
+    public void hover() {
+	Context.getBrowserDriver().delay();
+	Context.getBrowserDriver().hover(getLocator());
+	Context.getBrowserDriver().sleepForASecond();
+    }
+
+    /**
+     * Click on the element
+     */
+    public void click() {
+	Context.getBrowserDriver().delay();
+	Context.getBrowserDriver().click(getLocator());
+    }
+}
