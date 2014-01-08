@@ -41,6 +41,7 @@
             rev="latest.release" />
         <dependency org="org.apache.commons" name="commons-compress" rev="1.5"/>
         <dependency org="commons-lang" name="commons-lang" rev="latest.release"/>
-        <dependency org="commons-io" name="commons-io" rev="latest.release"/>    
+        <dependency org="commons-io" name="commons-io" rev="latest.release"/>
+        <dependency org="org.subethamail" name="subethasmtp" rev="3.1.7"/>    
     </dependencies>
 </ivy-module>
